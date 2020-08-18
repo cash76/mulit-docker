@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build - cash76/react-test -f ./client/Dcokerfile.dev ./client/Dcokerfile.dev
+  - docker build - cash76/react-test -f ./client/Dockerfile.dev ./client/Dcokerfile.dev
 
 script:
   - docker run -e CI=true cash76/react-test npm test
