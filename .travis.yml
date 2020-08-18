@@ -2,8 +2,10 @@ sudo: required
 services:
   - docker
 
+language: generic
+
 before_install:
-  - docker build - cash76/react-test -f ./client/Dockerfile.dev ./client/Dcokerfile.dev
+  - docker build - cash76/react-test -f ./client/Dockerfile.dev ./client/Dockerfile.dev
 
 script:
   - docker run -e CI=true cash76/react-test npm test
