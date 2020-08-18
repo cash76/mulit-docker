@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build - cash76/react-test -f ./client/Dcokerfile.dev ./client/Dcokerfile.dev
+
+script:
+  - docker run -e CI=true cash76/react-test npm test
+
+after_sucess:
+  - docker build -t cash76/mulit-client ./client
+  - docker build -t cash76/mulit-nginx ./nginx
+  - docker build -t cash76/multi-server ./server
+  - docker build -t cash76/multi-worker ./worker
+  # Log in to the dcoker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push to docker hub
+  - docker push cash76/mulit-client
+  - docker push cash76/mulit-nginx
+  - docker push cash76/multi-server
+  - docker push cash76/multi-worker
